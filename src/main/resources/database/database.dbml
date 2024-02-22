@@ -1,3 +1,5 @@
+// Database: bank
+
 Table "User" {
   "id" INT [pk, increment]
   "pseudo" VARCHAR(255) [not null]
