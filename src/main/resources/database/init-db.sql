@@ -12,31 +12,31 @@ CREATE TABLE users (
 );
 
 CREATE TABLE user_friendships (
-    userId INT,
-    friendId INT,
-    PRIMARY KEY (userId, friendId),
-    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (friendId) REFERENCES users(id) ON DELETE CASCADE
+    user_id INT,
+    friend_id INT,
+    PRIMARY KEY (user_id, friend_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_wallet (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    accountNumber VARCHAR(255) NOT NULL UNIQUE,
+    account_number VARCHAR(255) NOT NULL UNIQUE,
     balance DOUBLE NOT NULL DEFAULT 0.0,
-    userId INT,
-    FOREIGN KEY (userId) REFERENCES users(id)
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE transactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    senderAccountNumber VARCHAR(255) NOT NULL,
-    receiverAccountNumber VARCHAR(255) NOT NULL,
+    sender_account_number VARCHAR(255) NOT NULL,
+    receiver_account_number VARCHAR(255) NOT NULL,
     description TEXT,
     amount DOUBLE NOT NULL,
-    transactionFee DOUBLE NOT NULL DEFAULT 0.0,
+    transaction_fee DOUBLE NOT NULL DEFAULT 0.0,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    walletId INT,
-    FOREIGN KEY (walletId) REFERENCES user_wallet(id)
+    wallet_id INT,
+    FOREIGN KEY (wallet_id) REFERENCES user_wallet(id)
 );
 
 INSERT INTO users (pseudo, email, password, balance) VALUES
@@ -46,19 +46,19 @@ INSERT INTO users (pseudo, email, password, balance) VALUES
 ('Ken', 'ken@example.com', 'password123', 4000.0);
 
 -- Jane est amie avec Mark et John
-INSERT INTO user_friendships (userId, friendId) VALUES
+INSERT INTO user_friendships (user_id, friend_id) VALUES
 (1, 2),
 (1, 3);
 
 -- Mark est ami avec Ken
-INSERT INTO user_friendships (userId, friendId) VALUES
+INSERT INTO user_friendships (user_id, friend_id) VALUES
 (2, 4);
 
 -- John est ami avec Ken
-INSERT INTO user_friendships (userId, friendId) VALUES
+INSERT INTO user_friendships (user_id, friend_id) VALUES
 (3, 4);
 
-INSERT INTO user_wallet (accountNumber, balance, userId) VALUES
+INSERT INTO user_wallet (account_number, balance, user_id) VALUES
 ('ACC1001', 5000.0, 1),
 ('ACC1002', 3000.0, 2),
 ('ACC1003', 2000.0, 3),
