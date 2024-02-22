@@ -36,3 +36,28 @@ CREATE TABLE Transaction (
     walletId INT,
     FOREIGN KEY (walletId) REFERENCES Wallet(id)
 );
+
+INSERT INTO User (pseudo, email, password, balance) VALUES
+('Jane', 'jane@example.com', 'password123', 5000.0),
+('Mark', 'mark@example.com', 'password123', 3000.0),
+('John', 'john@example.com', 'password123', 2000.0),
+('Ken', 'ken@example.com', 'password123', 4000.0);
+
+-- Jane est amie avec Mark et John
+INSERT INTO Friends (userId, friendId) VALUES
+(1, 2),
+(1, 3);
+
+-- Mark est ami avec Ken
+INSERT INTO Friends (userId, friendId) VALUES
+(2, 4);
+
+-- John est ami avec Ken
+INSERT INTO Friends (userId, friendId) VALUES
+(3, 4);
+
+INSERT INTO Wallet (accountNumber, balance, userId) VALUES
+('ACC1001', 5000.0, 1),
+('ACC1002', 3000.0, 2),
+('ACC1003', 2000.0, 3),
+('ACC1004', 4000.0, 4);
