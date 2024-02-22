@@ -1,3 +1,5 @@
+drop database if exists bank;
+
 create database bank;
 use bank;
 
