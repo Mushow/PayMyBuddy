@@ -31,7 +31,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false, precision = 19, scale = 2)
+    @Column(nullable = false, precision = 19, scale = 2, columnDefinition = "decimal(19,2) default '0.00'")
     private BigDecimal balance;
 
     @ManyToMany(fetch = FetchType.EAGER)
