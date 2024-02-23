@@ -1,4 +1,4 @@
 package uk.mushow.paymybuddy.services;
 
-public class IWalletService {
+public interface IWalletService {
 }
