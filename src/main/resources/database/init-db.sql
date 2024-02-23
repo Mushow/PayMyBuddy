@@ -4,7 +4,7 @@ create database bank;
 use bank;
 
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     pseudo VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
@@ -12,30 +12,30 @@ CREATE TABLE users (
 );
 
 CREATE TABLE user_friendships (
-    user_id INT,
-    friend_id INT,
+    user_id BIGINT,
+    friend_id BIGINT,
     PRIMARY KEY (user_id, friend_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (friend_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_wallet (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     account_number VARCHAR(255) NOT NULL UNIQUE,
     balance DECIMAL NOT NULL DEFAULT 0.0,
-    user_id INT,
+    user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE transactions (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     sender_account_number VARCHAR(255) NOT NULL,
     receiver_account_number VARCHAR(255) NOT NULL,
     description TEXT,
     amount DECIMAL NOT NULL,
     transaction_fee DECIMAL NOT NULL DEFAULT 0.0,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    wallet_id INT,
+    wallet_id BIGINT,
     FOREIGN KEY (wallet_id) REFERENCES user_wallet(id)
 );
 
