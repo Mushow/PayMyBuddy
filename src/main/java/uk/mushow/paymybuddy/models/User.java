@@ -1,6 +1,7 @@
 package uk.mushow.paymybuddy.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class User {
     private String pseudo;
 
     @Column(nullable = false, unique = true)
+    @Email(message = "Invalid email format")
     private String email;
 
     @Column(nullable = false)
