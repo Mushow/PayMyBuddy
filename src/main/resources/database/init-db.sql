@@ -8,7 +8,7 @@ CREATE TABLE users (
     pseudo VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    balance DOUBLE DEFAULT 0.0
+    balance DECIMAL DEFAULT 0.0
 );
 
 CREATE TABLE user_friendships (
@@ -22,7 +22,7 @@ CREATE TABLE user_friendships (
 CREATE TABLE user_wallet (
     id INT AUTO_INCREMENT PRIMARY KEY,
     account_number VARCHAR(255) NOT NULL UNIQUE,
-    balance DOUBLE NOT NULL DEFAULT 0.0,
+    balance DECIMAL NOT NULL DEFAULT 0.0,
     user_id INT,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -32,8 +32,8 @@ CREATE TABLE transactions (
     sender_account_number VARCHAR(255) NOT NULL,
     receiver_account_number VARCHAR(255) NOT NULL,
     description TEXT,
-    amount DOUBLE NOT NULL,
-    transaction_fee DOUBLE NOT NULL DEFAULT 0.0,
+    amount DECIMAL NOT NULL,
+    transaction_fee DECIMAL NOT NULL DEFAULT 0.0,
     timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
     wallet_id INT,
     FOREIGN KEY (wallet_id) REFERENCES user_wallet(id)
