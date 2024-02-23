@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uk.mushow.paymybuddy.exceptions.EmailAlreadyInUseException;
+import uk.mushow.paymybuddy.exceptions.UserNotFound;
 import uk.mushow.paymybuddy.models.User;
 import uk.mushow.paymybuddy.repositories.UserRepository;
 import uk.mushow.paymybuddy.services.utils.ArgonUtil;
@@ -28,5 +29,15 @@ public class UserService implements IUserService {
         user.setPassword(hashedPassword);
         return userRepository.save(user);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> {
+            String userNotFoundMessage = "The user with email " + email + " was not found.";
+            log.error(userNotFoundMessage);
+            return new UserNotFound(userNotFoundMessage);
+        });
+    }
+
+
 
 }
