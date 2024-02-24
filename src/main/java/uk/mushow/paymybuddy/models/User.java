@@ -22,7 +22,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String pseudo;
+    private String username;
 
     @Column(nullable = false, unique = true)
     @Email(message = "Invalid email format")
@@ -36,9 +36,9 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_friendships",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "Friends",
+            joinColumns = @JoinColumn(name = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "friendId")
     )
     private Set<User> friendsList;
 
