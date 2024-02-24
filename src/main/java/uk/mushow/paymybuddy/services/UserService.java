@@ -30,6 +30,10 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
 
+    public void deleteUser(User user) {
+        userRepository.delete(user);
+    }
+
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> {
             String userNotFoundMessage = "The user with email " + email + " was not found.";
