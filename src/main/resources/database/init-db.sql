@@ -23,6 +23,7 @@ CREATE TABLE `Transaction` (
     `receiverWalletId` INT NOT NULL,
     `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `amount` BIGINT NOT NULL,
+    'transactionFee' DOUBLE NOT NULL DEFAULT 0.05,
     `description` VARCHAR(255),
     FOREIGN KEY (`issuerWalletId`) REFERENCES `Wallet` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`receiverWalletId`) REFERENCES `Wallet` (`id`) ON DELETE CASCADE
