@@ -42,6 +42,12 @@ public class UserService implements IUserService {
         });
     }
 
-
+    public User getUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> {
+            String userNotFoundMessage = "The user with username " + username + " was not found.";
+            log.error(userNotFoundMessage);
+            return new UserNotFoundException(userNotFoundMessage);
+        });
+    }
 
 }

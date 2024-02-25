@@ -20,7 +20,7 @@ public class Wallet {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String userId;
+    private Long userId;
 
     @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal balance;
