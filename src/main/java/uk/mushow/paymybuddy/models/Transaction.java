@@ -13,18 +13,18 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "transactions")
+@Table(name = "Transaction")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private User sendingUser;
+    @Column(nullable = false)
+    private int issuerWalletId;
 
-    @ManyToOne
-    private User receivingUser;
+    @Column(nullable = false)
+    private int receiverWalletId;
 
     @Column(nullable = false)
     private String description;
@@ -32,14 +32,8 @@ public class Transaction {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
 
-    @Column(nullable = false, precision = 19, scale = 2)
-    private BigDecimal transactionFee;
-
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
-
-    @ManyToOne
-    private Wallet wallet;
 
 }

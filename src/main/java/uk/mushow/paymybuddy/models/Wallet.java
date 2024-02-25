@@ -12,20 +12,17 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user_wallet")
+@Table(name = "Wallet")
 public class Wallet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 22, nullable = false)
-    private String accountNumber;
+    @Column(nullable = false, unique = true)
+    private String userId;
 
     @Column(precision = 19, scale = 2, nullable = false)
-    private BigDecimal amount;
-
-    @ManyToOne
-    private User user;
+    private BigDecimal balance;
 
 }
