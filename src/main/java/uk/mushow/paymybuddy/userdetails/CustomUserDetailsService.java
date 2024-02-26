@@ -1,4 +1,4 @@
-package uk.mushow.paymybuddy.services;
+package uk.mushow.paymybuddy.userdetails;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,10 +29,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         List<GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 
-        return new org.springframework.security.core.userdetails.User(
+        return new CustomUserDetails(
+                user.getId(),
+                user.getUsername(),
                 user.getEmail(),
                 user.getPassword(),
-                authorities
+                true,
+                authorities,
+                true,
+                true,
+                true
         );
     }
 
