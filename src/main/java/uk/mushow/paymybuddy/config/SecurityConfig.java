@@ -33,7 +33,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/home", true)
                         .permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();
