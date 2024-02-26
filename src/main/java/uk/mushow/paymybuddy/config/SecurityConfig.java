@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import uk.mushow.paymybuddy.services.CustomUserDetailsService;
+import uk.mushow.paymybuddy.userdetails.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
