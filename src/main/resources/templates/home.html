@@ -11,26 +11,34 @@
     <div class="mt-10">
         <h2 class="text-xl font-semibold">Your Balance: <span class="text-green-500" th:text="${balance}"></span></h2>
     </div>
-    <div class="mt-8">
-        <h3 class="text-lg font-semibold">Recent Transactions</h3>
-        <div class="mt-4">
-            <ul>
-                <li th:each="transaction : ${transactions}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <p><strong>Description:</strong> <span th:text="${transaction.description}"></span></p>
-                    <p><strong>Amount:</strong> <span th:text="${transaction.amount}"></span></p>
-                    <p><strong>Date:</strong> <span th:text="${#temporals.format(transaction.timestamp, 'dd MMM yyyy HH:mm')}"></span></p>
-                </li>
-            </ul>
+    <div class="flex mx-16">
+        <div class="mt-8 w-full">
+            <h3 class="text-lg font-semibold">Recent Transactions</h3>
+            <div class="mt-4">
+                <ul>
+                    <li th:each="transaction : ${transactions}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <p><strong>Description:</strong> <span th:text="${transaction.description}"></span></p>
+                        <p><strong>Amount:</strong> <span th:text="${transaction.amount}"></span></p>
+                        <p><strong>Date:</strong> <span th:text="${#temporals.format(transaction.timestamp, 'dd MMM yyyy HH:mm')}"></span></p>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="mt-8">
-        <h3 class="text-lg font-semibold">Your Friends</h3>
-        <div class="mt-4">
-            <ul>
-                <li th:each="friend : ${friends}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <p th:text="${friend.name}"></p>
-                </li>
-            </ul>
+        <div class="mt-8 w-full">
+            <h3 class="text-lg font-semibold">Your Friends</h3>
+            <div class="mt-4">
+                <ul>
+                    <li th:each="friend : ${friends}" class="bg-white flex gap-5 shadow-md rounded pl-4 py-4 mb-4 w-full">
+                        <p th:text="${friend.getUsername()} + ' → ' + ${friend.getEmail()}"></p>
+                        <form th:action="@{/friends/delete}" method="post" class="inline">
+                            <input type="hidden" name="deleteById" th:value="${friend.getId()}" />
+                            <button type="submit" class="bg-red-500 text-white p-1 rounded-full h-6 w-6 flex items-center justify-center">
+                                &times;
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
