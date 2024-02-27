@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.mushow.paymybuddy.services.UserService;
 import uk.mushow.paymybuddy.userdetails.CustomUserDetails;
 
@@ -21,15 +22,23 @@ public class FriendsController {
         return "friends";
     }
 
-    @PostMapping("/friends")
-    public String addFriend(@RequestParam("email") String email, Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    @PostMapping("/friends/add")
+    public String addFriend(@RequestParam("email") String email, Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         if (userService.doesEmailExist(email)) {
             userService.addFriendByEmail(customUserDetails.getEmail(), email);
-            model.addAttribute("message", "Friend added successfully!");
+            redirectAttributes.addFlashAttribute("message", "Friend added successfully!");
         } else {
-            model.addAttribute("error", "Email does not exist in the database.");
+            redirectAttributes.addFlashAttribute("error", "Email does not exist in the database.");
         }
-        return "redirect:/friends"; // Redirect to avoid duplicate submissions
+        return "redirect:/friends";
+    }
+
+    @PostMapping("/friends/delete")
+    //friends?deleteById=2
+    public String deleteFriend(@RequestParam("deleteById") Long friendId, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        userService.deleteFriendById(customUserDetails.getUserId(), friendId);
+        redirectAttributes.addFlashAttribute("message", "Friend deleted successfully!");
+        return "redirect:/home";
     }
 
 }
