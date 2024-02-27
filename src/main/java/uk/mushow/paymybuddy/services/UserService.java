@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import uk.mushow.paymybuddy.dtos.RegisterDTO;
+import uk.mushow.paymybuddy.exceptions.AlreadyFriendsException;
 import uk.mushow.paymybuddy.exceptions.EmailAlreadyInUseException;
 import uk.mushow.paymybuddy.exceptions.UserNotFoundException;
 import uk.mushow.paymybuddy.models.User;
@@ -78,5 +79,39 @@ public class UserService implements IUserService {
             return new UserNotFoundException(userNotFoundMessage);
         });
     }
+
+    public boolean doesEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public void addFriendByEmail(String currentUserEmail, String friendEmail) {
+        if (currentUserEmail.equals(friendEmail)) {
+            throw new IllegalArgumentException("Cannot add yourself as a friend.");
+        }
+
+        User currentUser = userRepository.findByEmail(currentUserEmail)
+                .orElseThrow(() -> new UserNotFoundException("Current user not found."));
+        User friendUser = userRepository.findByEmail(friendEmail)
+                .orElseThrow(() -> new UserNotFoundException("Friend user not found."));
+
+        if (areAlreadyFriends(currentUser, friendUser)) {
+            throw new AlreadyFriendsException("You are already friends with " + friendUser.getUsername() + ".");
+        }
+
+        addEachOtherAsFriends(currentUser, friendUser);
+
+        userRepository.save(currentUser);
+        userRepository.save(friendUser);
+    }
+
+    private boolean areAlreadyFriends(User user1, User user2) {
+        return user1.getFriendsList().contains(user2) || user2.getFriendsList().contains(user1);
+    }
+
+    private void addEachOtherAsFriends(User user1, User user2) {
+        user1.getFriendsList().add(user2);
+        user2.getFriendsList().add(user1);
+    }
+
 
 }
