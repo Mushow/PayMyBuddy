@@ -13,18 +13,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Transaction")
+@Table(name = "transaction")
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private int issuerWalletId;
+    @ManyToOne
+    @JoinColumn(name = "issuer_wallet_id", nullable = false)
+    private Wallet issuerWalletId;
 
-    @Column(nullable = false)
-    private int receiverWalletId;
+    @ManyToOne
+    @JoinColumn(name = "receiver_wallet_id", nullable = false)
+    private Wallet receiverWalletId;
 
     @Column(nullable = false)
     private String description;
