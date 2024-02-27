@@ -10,7 +10,10 @@ import uk.mushow.paymybuddy.dtos.RegisterDTO;
 import uk.mushow.paymybuddy.exceptions.EmailAlreadyInUseException;
 import uk.mushow.paymybuddy.exceptions.UserNotFoundException;
 import uk.mushow.paymybuddy.models.User;
+import uk.mushow.paymybuddy.models.Wallet;
 import uk.mushow.paymybuddy.repositories.UserRepository;
+
+import java.math.BigDecimal;
 
 @Service
 @Log4j2
@@ -23,7 +26,16 @@ public class UserService implements IUserService {
     @Autowired
     PasswordEncoder argon2PasswordEncoder;
 
+    @Autowired
+    private WalletService walletService;
+
     public void createUser(RegisterDTO registerDTO) {
+        if(userRepository.existsByUsername(registerDTO.username())) {
+            String invalidUsernameMessage = "The username is already in use.";
+            log.error(invalidUsernameMessage);
+            throw new EmailAlreadyInUseException(invalidUsernameMessage);
+        }
+
         if (userRepository.existsByEmail(registerDTO.email())) {
             String invalidEmailMessage = "The email is already in use.";
             log.error(invalidEmailMessage);
@@ -36,7 +48,15 @@ public class UserService implements IUserService {
         String hashedPassword = argon2PasswordEncoder.encode(registerDTO.password());
         newUser.setPassword(hashedPassword);
 
-        userRepository.save(newUser);
+        newUser = userRepository.save(newUser);
+        createWallet(newUser);
+    }
+
+    private void createWallet(User newUser) {
+        Wallet wallet = new Wallet();
+        wallet.setUser(newUser);
+        wallet.setBalance(BigDecimal.valueOf(0.0));
+        walletService.save(wallet);
     }
 
     public void deleteUser(User user) {
