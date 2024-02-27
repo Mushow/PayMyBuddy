@@ -5,9 +5,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import uk.mushow.paymybuddy.userdetails.CustomUserDetails;
-import uk.mushow.paymybuddy.userdetails.CustomUserDetailsService;
 import uk.mushow.paymybuddy.services.WalletService;
+import uk.mushow.paymybuddy.userdetails.CustomUserDetails;
 
 @Controller
 public class HomeController {
@@ -18,11 +17,8 @@ public class HomeController {
     @GetMapping("/home")
     public String getHomePage(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         Long userId = customUserDetails.getUserId();
-        System.out.println("userId = " + userId);
         model.addAttribute("balance", walletService.getBalance(userId));
-        System.out.println(walletService.getBalance(userId));
         return "home";
     }
-
 
 }
