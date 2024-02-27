@@ -14,10 +14,13 @@ public class WalletService {
     private WalletRepository walletRepository;
 
     public BigDecimal getBalance(Long userId) {
-        System.out.println("Wallet: " + walletRepository.findByUserId(userId));
         return walletRepository.findByUserId(userId)
                 .map(Wallet::getBalance)
                 .orElse(BigDecimal.ZERO);
+    }
+
+    public Wallet save(Wallet wallet) {
+        return walletRepository.save(wallet);
     }
 
 }
