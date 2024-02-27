@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Money</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div th:insert="~{fragments/navbar :: navigation}"></div>
+<div class="container max-w-md mx-auto mt-20 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form action="#" method="POST">
+        <div class="mb-4">
+            <label for="friendSelect" class="block text-gray-700 text-sm font-bold mb-2">Select a friend:</label>
+            <select id="friendSelect" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <!-- Example Friends -->
+                <option value="friend1">Friend 1</option>
+                <option value="friend2">Friend 2</option>
+                <option value="friend3">Friend 3</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount:</label>
+            <input type="text" id="amount" name="amount" placeholder="Enter amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Send
+            </button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
