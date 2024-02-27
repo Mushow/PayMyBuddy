@@ -15,6 +15,7 @@ import uk.mushow.paymybuddy.models.Wallet;
 import uk.mushow.paymybuddy.repositories.UserRepository;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Service
 @Log4j2
@@ -113,5 +114,22 @@ public class UserService implements IUserService {
         user2.getFriendsList().add(user1);
     }
 
+    public Set<User> getFriends(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found."))
+                .getFriendsList();
+    }
 
+    public void deleteFriendById(Long userId, Long friendId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
+        User friend = userRepository.findById(friendId)
+                .orElseThrow(() -> new UserNotFoundException("Friend not found."));
+
+        user.getFriendsList().remove(friend);
+        friend.getFriendsList().remove(user);
+
+        userRepository.save(user);
+        userRepository.save(friend);
+    }
 }
