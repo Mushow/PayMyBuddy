@@ -34,7 +34,6 @@ public class FriendsController {
     }
 
     @PostMapping("/friends/delete")
-    //friends?deleteById=2
     public String deleteFriend(@RequestParam("deleteById") Long friendId, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         userService.deleteFriendById(customUserDetails.getUserId(), friendId);
         redirectAttributes.addFlashAttribute("message", "Friend deleted successfully!");
