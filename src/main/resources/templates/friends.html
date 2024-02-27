@@ -7,15 +7,16 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
-<body class="bg-gray-100 text-gray-900 flex justify-center">
-<div class="container max-w-sm mt-20 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+<body class="flex flex-col bg-gray-100 text-gray-900">
+<div class="w-full" th:insert="~{navbar :: navigation}"></div>
+<div class="self-center container max-w-sm mt-20 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
     <form action="#" th:action="@{/friends}" method="POST">
         <div class="mb-4 text-center">
-            <h5 class="inline-block bg-green-500 text-white py-2 px-4 rounded">Pay My Buddy</h5>
+            <h5 class="inline-block bg-green-500 text-white py-2 px-4 rounded">Enter your friend email</h5>
         </div>
 
         <div class="mb-4">
-            <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" placeholder="Add a friend" id="addFriendTextarea" maxlength="500"></textarea>
+            <input type="text"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none" placeholder="user@email.com" id="addFriendTextarea" maxlength="500">
         </div>
         <div class="flex items-center justify-between mt-4">
             <button type="button" class="w-full inline-block align-middle text-center select-none border font-bold whitespace-no-wrap p-3 rounded text-base leading-normal no-underline text-blue-100 bg-blue-500 hover:bg-blue-700" id="addFriendButton">
