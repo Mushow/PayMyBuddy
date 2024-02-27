@@ -30,11 +30,4 @@ public class Wallet {
     @OneToMany(mappedBy = "issuerWalletId")
     private List<Transaction> transactions;
 
-    /*
-
-    + John : 1000$ (received)
-    - Amida : 1000$ (sent)
-
-     */
-
 }
