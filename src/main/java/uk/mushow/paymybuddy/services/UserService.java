@@ -65,24 +65,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void deleteUser(User user) {
-        userRepository.delete(user);
-    }
-
-    @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> {
             String userNotFoundMessage = "The user with email " + email + " was not found.";
-            log.error(userNotFoundMessage);
-            return new UserNotFoundException(userNotFoundMessage);
-        });
-    }
-
-
-    @Override
-    public User getUserByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> {
-            String userNotFoundMessage = "The user with username " + username + " was not found.";
             log.error(userNotFoundMessage);
             return new UserNotFoundException(userNotFoundMessage);
         });
@@ -144,5 +129,11 @@ public class UserService implements IUserService {
 
         userRepository.save(user);
         userRepository.save(friend);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("User not found."));
     }
 }
