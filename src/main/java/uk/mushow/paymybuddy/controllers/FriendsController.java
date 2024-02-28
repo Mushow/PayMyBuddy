@@ -24,11 +24,15 @@ public class FriendsController {
 
     @PostMapping("/friends/add")
     public String addFriend(@RequestParam("email") String email, Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        if (userService.doesEmailExist(email)) {
-            userService.addFriendByEmail(customUserDetails.getEmail(), email);
-            redirectAttributes.addFlashAttribute("message", "Friend added successfully!");
-        } else {
-            redirectAttributes.addFlashAttribute("error", "Email does not exist in the database.");
+        try {
+            if (userService.doesEmailExist(email)) {
+                userService.addFriendByEmail(customUserDetails.getEmail(), email);
+                redirectAttributes.addFlashAttribute("message", "Friend added successfully!");
+            } else {
+                redirectAttributes.addFlashAttribute("error", "Email does not exist in the database.");
+            }
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/friends";
     }
