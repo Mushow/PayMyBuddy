@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div class="w-full" th:insert="~{fragments/navbar :: navigation}"></div>
+<div class="container mx-auto px-4">
+    <div class="flex mx-16">
+        <div class="mt-8 w-full">
+            <h3 class="text-lg font-semibold">Personal Information</h3>
+            <div class="mt-4">
+                <ul>
+                    <li class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                        <p><strong>Username:</strong> <span th:text="${user.getUsername()}"></span></p>
+                        <p><strong>Email:</strong> <span th:text="${user.getEmail()}"></span></p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
