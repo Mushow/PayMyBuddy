@@ -9,4 +9,7 @@ public interface IWalletService {
     BigDecimal getBalance(Long userId);
     void save(Wallet wallet);
 
+    void topUpBalance(Long userId, BigDecimal amount);
+
+    void withdrawFromBalance(Long userId, BigDecimal amount);
 }
