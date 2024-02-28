@@ -14,10 +14,12 @@
         <div class="mb-4">
             <label for="friendSelect" class="block text-gray-700 text-sm font-bold mb-2">Select a friend:</label>
             <select id="friendSelect" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                <!-- Example Friends -->
-                <option value="friend1">Friend 1</option>
-                <option value="friend2">Friend 2</option>
-                <option value="friend3">Friend 3</option>
+                <th:block th:if="${not #lists.isEmpty(friends)}">
+                    <th:block th:each="friend : ${friends}">
+                        <option th:value="${friend.getEmail()}" th:text="${friend.getUsername()} + ' → ' + ${friend.getEmail()}">Friend Name</option>
+                    </th:block>
+                </th:block>
+                <option th:if="${#lists.isEmpty(friends)}">(None)</option>
             </select>
         </div>
 
