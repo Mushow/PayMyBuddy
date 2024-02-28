@@ -20,15 +20,12 @@
 <div class="container mx-auto px-4">
     <div class="mx-16 mt-10">
         <h2 class="text-xl font-semibold">Your Balance: <span class="text-green-500" th:text="${balance}"></span></h2>
-        <form action="/topup" method="post" class="mt-4">
+        <form class="mt-4">
             <input type="text" pattern="^\d*(\.\d+)?$" title="Please enter a valid number" name="amount" class="shadow appearance-none border rounded py-2 px-3 text-grey-darker" placeholder="Enter amount" required>
-            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150">
+            <button type="submit" formaction="/topup" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:border-green-700 focus:shadow-outline-green transition ease-in-out duration-150">
                 Top Up
             </button>
-        </form>
-        <form action="/withdraw" method="post" class="mt-4">
-            <input type="text" pattern="^\d*(\.\d+)?$" title="Please enter a valid number" name="amount" class="shadow appearance-none border rounded py-2 px-3 text-grey-darker" placeholder="Enter amount" required>
-            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150">
+            <button type="submit" formaction="/withdraw" class="inline-flex items-center px-4 py-2 border border-transparent text-base leading-6 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150">
                 Withdraw
             </button>
         </form>
