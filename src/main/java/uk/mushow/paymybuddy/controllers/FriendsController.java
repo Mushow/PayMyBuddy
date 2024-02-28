@@ -23,7 +23,7 @@ public class FriendsController {
     }
 
     @PostMapping("/friends/add")
-    public String addFriend(@RequestParam("email") String email, Model model, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public String addFriend(@RequestParam("email") String email, RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         try {
             if (userService.doesEmailExist(email)) {
                 userService.addFriendByEmail(customUserDetails.getEmail(), email);
