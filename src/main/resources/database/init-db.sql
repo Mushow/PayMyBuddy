@@ -13,7 +13,7 @@ CREATE TABLE `user` (
 CREATE TABLE `wallet` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
     `user_id` BIGINT NOT NULL,
-    `balance` BIGINT NOT NULL DEFAULT 0,
+    `balance` DECIMAL(19, 2) NOT NULL DEFAULT 0,
     FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE `transaction` (
     `issuer_wallet_id` BIGINT NOT NULL,
     `receiver_wallet_id` BIGINT NOT NULL,
     `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    `amount` BIGINT NOT NULL,
+    `amount` DECIMAL(19, 2) NOT NULL,
     `description` VARCHAR(255),
     FOREIGN KEY (`issuer_wallet_id`) REFERENCES `wallet` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`receiver_wallet_id`) REFERENCES `wallet` (`id`) ON DELETE CASCADE
