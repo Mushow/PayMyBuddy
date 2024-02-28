@@ -19,13 +19,13 @@ CREATE TABLE `wallet` (
 
 CREATE TABLE `transaction` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
-    `issuer_wallet_id` BIGINT NOT NULL,
-    `receiver_wallet_id` BIGINT NOT NULL,
+    `issuer_wallet` BIGINT,
+    `receiver_wallet` BIGINT,
     `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `amount` DECIMAL(19, 2) NOT NULL,
     `description` VARCHAR(255),
-    FOREIGN KEY (`issuer_wallet_id`) REFERENCES `wallet` (`id`) ON DELETE CASCADE,
-    FOREIGN KEY (`receiver_wallet_id`) REFERENCES `wallet` (`id`) ON DELETE CASCADE
+    FOREIGN KEY (`issuer_wallet`) REFERENCES `wallet` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`receiver_wallet`) REFERENCES `wallet` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `friends` (
