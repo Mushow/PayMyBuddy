@@ -6,8 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import uk.mushow.paymybuddy.models.User;
+import uk.mushow.paymybuddy.services.TransactionService;
 import uk.mushow.paymybuddy.services.UserService;
 import uk.mushow.paymybuddy.services.WalletService;
 import uk.mushow.paymybuddy.userdetails.CustomUserDetails;
@@ -24,6 +26,9 @@ public class TransferController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private TransactionService transactionService;
+
     @GetMapping("/transfer")
     public String showTransfer(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         BigDecimal availableFunds = walletService.getBalance(customUserDetails.getUserId());
@@ -34,7 +39,12 @@ public class TransferController {
     }
 
     @PostMapping("/transfer")
-    public String transfer(RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    public String transfer(@RequestParam("friendEmail") String friendEmail,
+                           @RequestParam("amount") BigDecimal amount,
+                           @RequestParam("description") String description,
+                           RedirectAttributes redirectAttributes,
+                           @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        transactionService.transfer(customUserDetails.getUserId(), friendEmail, amount, description);
         redirectAttributes.addFlashAttribute("success", "Transfer completed!.");
         return "redirect:/transfer";
     }
