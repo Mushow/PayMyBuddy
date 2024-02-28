@@ -14,10 +14,10 @@
             <h2 class="text-xl font-semibold">Your Balance: <span class="text-green" th:text="${availableFunds}"></span></h2>
     </div>
     <div class="w-full container max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <form action="#" method="POST">
+        <form action="#" th:action="@{/transfer}" method="POST">
             <div class="mb-4">
                 <label for="friendSelect" class="block text-gray-700 text-sm font-bold mb-2">Select a friend:</label>
-                <select id="friendSelect" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                <select id="friendSelect" name="friendEmail" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                     <th:block th:if="${not #lists.isEmpty(friends)}">
                         <th:block th:each="friend : ${friends}">
                             <option th:value="${friend.getEmail()}" th:text="${friend.getUsername()} + ' → ' + ${friend.getEmail()}">Friend Name</option>
@@ -30,6 +30,11 @@
             <div class="mb-4">
                 <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount:</label>
                 <input type="text" id="amount" name="amount" placeholder="Enter amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Groceries, Restaurant, Tuition Fees..." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             </div>
 
             <div class="flex items-center justify-between">
