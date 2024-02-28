@@ -27,7 +27,7 @@ public class Wallet {
     @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal balance;
 
-    @OneToMany(mappedBy = "issuerWalletId")
+    @OneToMany(mappedBy = "issuerWallet")
     private List<Transaction> transactions;
 
 }
