@@ -31,6 +31,8 @@ public class UserService implements IUserService {
     @Autowired
     private WalletService walletService;
 
+
+    @Override
     public void createUser(RegisterDTO registerDTO) {
         if(userRepository.existsByUsername(registerDTO.username())) {
             String invalidUsernameMessage = "The username is already in use.";
@@ -54,17 +56,20 @@ public class UserService implements IUserService {
         createWallet(newUser);
     }
 
-    private void createWallet(User newUser) {
+    @Override
+    public void createWallet(User newUser) {
         Wallet wallet = new Wallet();
         wallet.setUser(newUser);
         wallet.setBalance(BigDecimal.valueOf(0.0));
         walletService.save(wallet);
     }
 
+    @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
     }
 
+    @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> {
             String userNotFoundMessage = "The user with email " + email + " was not found.";
@@ -73,6 +78,8 @@ public class UserService implements IUserService {
         });
     }
 
+
+    @Override
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             String userNotFoundMessage = "The user with username " + username + " was not found.";
@@ -81,10 +88,12 @@ public class UserService implements IUserService {
         });
     }
 
+    @Override
     public boolean doesEmailExist(String email) {
         return userRepository.existsByEmail(email);
     }
 
+    @Override
     public void addFriendByEmail(String currentUserEmail, String friendEmail) {
         if (currentUserEmail.equals(friendEmail)) {
             throw new IllegalArgumentException("Cannot add yourself as a friend.");
@@ -105,21 +114,25 @@ public class UserService implements IUserService {
         userRepository.save(friendUser);
     }
 
-    private boolean areAlreadyFriends(User user1, User user2) {
+    @Override
+    public boolean areAlreadyFriends(User user1, User user2) {
         return user1.getFriendsList().contains(user2) || user2.getFriendsList().contains(user1);
     }
 
-    private void addEachOtherAsFriends(User user1, User user2) {
+    @Override
+    public void addEachOtherAsFriends(User user1, User user2) {
         user1.getFriendsList().add(user2);
         user2.getFriendsList().add(user1);
     }
 
+    @Override
     public Set<User> getFriends(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."))
                 .getFriendsList();
     }
 
+    @Override
     public void deleteFriendById(Long userId, Long friendId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."));
