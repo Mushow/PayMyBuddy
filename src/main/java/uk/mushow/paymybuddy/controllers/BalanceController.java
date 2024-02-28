@@ -28,7 +28,6 @@ public class BalanceController {
         Long userId = userDetails.getUserId();
         try {
             walletService.topUpBalance(userId, amount);
-            transactionService.topUp(userId, amount, "Add from bank!");
             redirectAttributes.addFlashAttribute("message", "Balance topped up successfully!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -43,7 +42,6 @@ public class BalanceController {
         Long userId = userDetails.getUserId();
         try {
             walletService.withdrawFromBalance(userId, amount);
-            transactionService.withdraw(userId, amount, "Withdraw to bank!");
             redirectAttributes.addFlashAttribute("message", "Balance withdrawn successfully!");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
