@@ -21,12 +21,12 @@ public class Transaction {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "issuer_wallet_id", nullable = false)
-    private Wallet issuerWalletId;
+    @JoinColumn(name = "issuer_wallet")
+    private Wallet issuerWallet;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_wallet_id", nullable = false)
-    private Wallet receiverWalletId;
+    @JoinColumn(name = "receiver_wallet")
+    private Wallet receiverWallet;
 
     @Column(nullable = false)
     private String description;

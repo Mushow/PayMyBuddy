@@ -9,9 +9,7 @@ public interface IUserService {
 
     void createUser(RegisterDTO registerDTO);
     void createWallet(User newUser);
-    void deleteUser(User user);
     User getUserByEmail(String email);
-    User getUserByUsername(String username);
     void addEachOtherAsFriends(User user, User friend);
     Set<User> getFriends(Long userId);
     void deleteFriendById(Long userId, Long friendId);
@@ -19,4 +17,5 @@ public interface IUserService {
     boolean doesEmailExist(String email);
     void addFriendByEmail(String currentUserEmail, String friendEmail);
 
+    User getUserById(Long userId);
 }
