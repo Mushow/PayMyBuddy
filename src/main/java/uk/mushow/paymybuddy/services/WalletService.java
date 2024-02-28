@@ -2,16 +2,20 @@ package uk.mushow.paymybuddy.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uk.mushow.paymybuddy.models.Wallet;
 import uk.mushow.paymybuddy.repositories.WalletRepository;
 
 import java.math.BigDecimal;
 
 @Service
+@Transactional
 public class WalletService implements IWalletService {
 
     @Autowired
     private WalletRepository walletRepository;
+
+    private static final BigDecimal FEES = new BigDecimal("0.005");
 
     @Override
     public BigDecimal getBalance(Long userId) {
@@ -29,7 +33,7 @@ public class WalletService implements IWalletService {
     public void topUpBalance(Long userId, BigDecimal amount) {
         Wallet wallet = walletRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
-        wallet.setBalance(wallet.getBalance().add(amount));
+        wallet.setBalance(wallet.getBalance().add(amount.subtract(amount.multiply(FEES))));
         save(wallet);
     }
 
@@ -38,7 +42,7 @@ public class WalletService implements IWalletService {
         Wallet wallet = walletRepository.findByUserId(userId)
                 .filter(w -> w.getBalance().compareTo(amount) >= 0)
                 .orElseThrow(() -> new IllegalArgumentException("Insufficient balance"));
-        wallet.setBalance(wallet.getBalance().subtract(amount));
+        wallet.setBalance(wallet.getBalance().subtract(amount.add(amount.multiply(FEES))));
         save(wallet);
     }
 }
