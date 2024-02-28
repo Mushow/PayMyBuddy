@@ -18,6 +18,7 @@
         </div>
         <div class="flex items-center space-x-1">
             <div sec:authorize="isAuthenticated()">
+                <span th:text="${user.getUsername()}"></span>
                 <a href="#" th:href="@{/logout}" class="py-5 px-3 hover:bg-gray-700 rounded">Log out</a>
             </div>
         </div>
