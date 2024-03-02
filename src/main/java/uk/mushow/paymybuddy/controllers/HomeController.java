@@ -28,7 +28,8 @@ public class HomeController {
         model.addAttribute("user", userService.getUserById(userId));
         model.addAttribute("balance", walletService.getBalance(userId));
         model.addAttribute("friends", userService.getFriends(userId));
-        model.addAttribute("transactions", transactionService.getTransactionsDTO(userId));
+        model.addAttribute("transactions", transactionService.getIssuerTransactionsDTO(userId));
+        model.addAttribute("receiverTransactions", transactionService.getReceiverTransactionsDTO(userId));
         return "home";
     }
 
