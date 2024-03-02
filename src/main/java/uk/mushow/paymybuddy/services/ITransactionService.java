@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface ITransactionService {
 
-    List<TransactionDTO> getTransactionsDTO(Long userId);
+    List<TransactionDTO> getIssuerTransactionsDTO(Long userId);
+
+    List<TransactionDTO> getReceiverTransactionsDTO(Long userId);
 
     void transfer(Long userId, String friendEmail, BigDecimal amount, String description);
 
