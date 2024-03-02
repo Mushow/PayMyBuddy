@@ -4,4 +4,4 @@ import java.math.BigDecimal;
 
 
 public record TransactionDTO(String issuerName, String receiverName, String description,
-                             BigDecimal amount, String timestamp) {}
+                             BigDecimal amount, BigDecimal fee) {}
