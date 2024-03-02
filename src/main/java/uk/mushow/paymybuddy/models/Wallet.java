@@ -28,6 +28,9 @@ public class Wallet {
     private BigDecimal balance;
 
     @OneToMany(mappedBy = "issuerWallet")
-    private List<Transaction> transactions;
+    private List<Transaction> issuedTransactions;
+
+    @OneToMany(mappedBy = "receiverWallet")
+    private List<Transaction> receivedTransactions;
 
 }
