@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uk.mushow.paymybuddy.dtos.TransactionDTO;
 import uk.mushow.paymybuddy.models.Transaction;
-import uk.mushow.paymybuddy.models.User;
 import uk.mushow.paymybuddy.models.Wallet;
 import uk.mushow.paymybuddy.repositories.TransactionRepository;
 import uk.mushow.paymybuddy.repositories.WalletRepository;
@@ -31,8 +30,16 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    public List<TransactionDTO> getTransactionsDTO(Long userId) {
-        List<Transaction> transactions = walletRepository.findByIssuerWallet_User_Id(userId);
+    public List<TransactionDTO> getIssuerTransactionsDTO(Long userId) {
+        List<Transaction> transactions = walletRepository.findIssuerWalletTransactions(userId);
+        return transactions.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TransactionDTO> getReceiverTransactionsDTO(Long userId) {
+        List<Transaction> transactions = walletRepository.findReceiverWalletTransactions(userId);
         return transactions.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
@@ -54,9 +61,6 @@ public class TransactionService implements ITransactionService {
 
         Transaction issuerTransaction = createTransaction(issuerWallet, receiverWallet, amount, description);
         transactionRepository.save(issuerTransaction);
-
-        Transaction receiverTransaction = createTransaction(receiverWallet, issuerWallet, amount, description);
-        transactionRepository.save(receiverTransaction);
     }
 
     @Override
@@ -71,12 +75,13 @@ public class TransactionService implements ITransactionService {
     }
 
     private TransactionDTO convertToDTO(Transaction transaction) {
+        BigDecimal fees = transaction.getAmount().multiply(WalletService.FEES);
         return new TransactionDTO(
                 transaction.getIssuerWallet().getUser().getUsername(),
                 transaction.getReceiverWallet().getUser().getUsername(),
                 transaction.getDescription(),
-                transaction.getAmount(),
-                transaction.getTimestamp().toString());
+                transaction.getAmount().subtract(fees),
+                fees);
     }
 
 }
