@@ -18,7 +18,8 @@ public class FriendsController {
     private UserService userService;
 
     @GetMapping("/friends")
-    public String getFriendsPage() {
+    public String getFriendsPage(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        model.addAttribute("user", userService.getUserById(customUserDetails.getUserId()));
         return "friends";
     }
 
