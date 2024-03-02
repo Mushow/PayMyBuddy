@@ -33,6 +33,7 @@ public class TransferController {
     public String showTransfer(Model model, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         BigDecimal availableFunds = walletService.getBalance(customUserDetails.getUserId());
         Set<User> friends = userService.getFriends(customUserDetails.getUserId());
+        model.addAttribute("user", userService.getUserById(customUserDetails.getUserId()));
         model.addAttribute("friends", friends);
         model.addAttribute("availableFunds", availableFunds);
         return "transfer";
@@ -42,10 +43,13 @@ public class TransferController {
     public String transfer(@RequestParam("friendEmail") String friendEmail,
                            @RequestParam("amount") BigDecimal amount,
                            @RequestParam("description") String description,
-                           RedirectAttributes redirectAttributes,
-                           @AuthenticationPrincipal CustomUserDetails customUserDetails) {
-        transactionService.transfer(customUserDetails.getUserId(), friendEmail, amount, description);
-        redirectAttributes.addFlashAttribute("success", "Transfer completed!.");
+                           RedirectAttributes redirectAttributes, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+        try {
+            transactionService.transfer(customUserDetails.getUserId(), friendEmail, amount, description);
+            redirectAttributes.addFlashAttribute("message", "Transfer completed!.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
         return "redirect:/transfer";
     }
 
