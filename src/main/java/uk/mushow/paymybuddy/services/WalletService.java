@@ -15,7 +15,7 @@ public class WalletService implements IWalletService {
     @Autowired
     private WalletRepository walletRepository;
 
-    private static final BigDecimal FEES = new BigDecimal("0.005");
+    public static final BigDecimal FEES = new BigDecimal("0.005");
 
     @Override
     public BigDecimal getBalance(Long userId) {
@@ -31,9 +31,10 @@ public class WalletService implements IWalletService {
 
     @Override
     public void topUpBalance(Long userId, BigDecimal amount) {
+        BigDecimal amountToTopUp = amount.subtract(amount.multiply(FEES));
         Wallet wallet = walletRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
-        wallet.setBalance(wallet.getBalance().add(amount.subtract(amount.multiply(FEES))));
+        wallet.setBalance(wallet.getBalance().add(amountToTopUp));
         save(wallet);
     }
 
@@ -42,7 +43,7 @@ public class WalletService implements IWalletService {
         Wallet wallet = walletRepository.findByUserId(userId)
                 .filter(w -> w.getBalance().compareTo(amount) >= 0)
                 .orElseThrow(() -> new IllegalArgumentException("Insufficient balance"));
-        wallet.setBalance(wallet.getBalance().subtract(amount.add(amount.multiply(FEES))));
+        wallet.setBalance(wallet.getBalance().subtract(amount));
         save(wallet);
     }
 }
