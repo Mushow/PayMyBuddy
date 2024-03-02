@@ -19,5 +19,8 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
     Optional<Wallet> findByUserId(@Param("userId") Long userId);
 
     @Query("SELECT t FROM Transaction t WHERE t.issuerWallet.user.id = :userId")
-    List<Transaction> findByIssuerWallet_User_Id(Long userId);
+    List<Transaction> findIssuerWalletTransactions(Long userId);
+
+    @Query("SELECT t FROM Transaction t WHERE t.receiverWallet.user.id = :userId")
+    List<Transaction> findReceiverWalletTransactions(Long userId);
 }
