@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@Transactional
 public class TransactionService implements ITransactionService {
 
     private final WalletRepository walletRepository;
@@ -46,6 +45,7 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
+    @Transactional
     public void transfer(Long userId, String friendEmail, BigDecimal amount, String description) {
         Wallet issuerWallet = walletRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Issuer wallet not found"));

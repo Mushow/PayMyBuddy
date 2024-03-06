@@ -19,7 +19,6 @@ import java.util.Set;
 
 @Service
 @Log4j2
-@Transactional(propagation = Propagation.REQUIRES_NEW)
 public class UserService implements IUserService {
 
     @Autowired
@@ -33,6 +32,7 @@ public class UserService implements IUserService {
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void createUser(RegisterDTO registerDTO) {
         if(userRepository.existsByUsername(registerDTO.username())) {
             String invalidUsernameMessage = "The username is already in use.";
@@ -57,6 +57,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void createWallet(User newUser) {
         Wallet wallet = new Wallet();
         wallet.setUser(newUser);
@@ -79,6 +80,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addFriendByEmail(String currentUserEmail, String friendEmail) {
         if (currentUserEmail.equals(friendEmail)) {
             throw new IllegalArgumentException("Cannot add yourself as a friend.");
@@ -105,6 +107,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void addEachOtherAsFriends(User user1, User user2) {
         user1.getFriendsList().add(user2);
         user2.getFriendsList().add(user1);
@@ -118,6 +121,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void deleteFriendById(Long userId, Long friendId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."));
