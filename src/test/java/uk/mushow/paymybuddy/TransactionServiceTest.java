@@ -19,10 +19,7 @@ import uk.mushow.paymybuddy.services.UserService;
 import uk.mushow.paymybuddy.services.WalletService;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -112,10 +109,21 @@ public class TransactionServiceTest {
 
     @Test
     void testTransfer() {
-        when(walletRepository.findByUserId(1L)).thenReturn(java.util.Optional.of(issuerWallet));
-        when(walletRepository.findByUserId(2L)).thenReturn(java.util.Optional.of(receiverWallet));
+        when(walletRepository.findByUserId(issuerUser.getId())).thenReturn(Optional.of(issuerWallet));
+        when(userService.getUserByEmail(receiverUser.getEmail())).thenReturn(receiverUser);
+        when(walletRepository.findByUserId(receiverUser.getId())).thenReturn(Optional.of(receiverWallet));
 
-        transactionService.transfer(1L, "friend@example.com", new BigDecimal("20.00"), "Test transfer");
+        transactionService.transfer(issuerUser.getId(), receiverUser.getEmail(), new BigDecimal("20.00"), "Test transfer");
+
+        verify(walletService).withdrawFromBalance(issuerUser.getId(), new BigDecimal("20.00"));
+        verify(walletService).topUpBalance(receiverUser.getId(), new BigDecimal("20.00"));
+        verify(transactionRepository).save(any(Transaction.class));
+
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            transactionService.transfer(issuerUser.getId(), receiverUser.getEmail(), new BigDecimal("5000.00"), "Test transfer");
+        });
+
+        assertEquals("Insufficient funds", thrown.getMessage());
     }
 
 }
