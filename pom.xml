@@ -107,6 +107,14 @@
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <exclude>uk/mushow/paymybuddy/controllers/**/*.*</exclude>
+                                <exclude>uk/mushow/paymybuddy/userdetails/**/*.*</exclude>
+                                <exclude>uk/mushow/paymybuddy/models/**/*.*</exclude>
+                                <exclude>uk/mushow/paymybuddy/dtos/**/*.*</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
