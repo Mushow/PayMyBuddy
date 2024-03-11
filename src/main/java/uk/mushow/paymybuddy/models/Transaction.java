@@ -34,8 +34,4 @@ public class Transaction {
     @Column(nullable = false, precision = 19, scale = 2)
     private BigDecimal amount;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timestamp;
-
 }

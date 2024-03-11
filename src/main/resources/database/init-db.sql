@@ -21,7 +21,6 @@ CREATE TABLE `transaction` (
     `id` BIGINT AUTO_INCREMENT PRIMARY KEY,
     `issuer_wallet` BIGINT,
     `receiver_wallet` BIGINT,
-    `timestamp` DATETIME DEFAULT CURRENT_TIMESTAMP,
     `amount` DECIMAL(19, 2) NOT NULL,
     `description` VARCHAR(255),
     FOREIGN KEY (`issuer_wallet`) REFERENCES `wallet` (`id`) ON DELETE CASCADE,

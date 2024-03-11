@@ -71,7 +71,6 @@ public class TransactionServiceTest {
         transaction.setReceiverWallet(receiverWallet);
         transaction.setAmount(new BigDecimal("20.00"));
         transaction.setDescription("Test transfer");
-        transaction.setTimestamp(new Date());
     }
 
     @Test

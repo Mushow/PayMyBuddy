@@ -70,7 +70,6 @@ public class TransactionService implements ITransactionService {
         transaction.setReceiverWallet(receiverWallet);
         transaction.setAmount(amount);
         transaction.setDescription(description);
-        transaction.setTimestamp(new Date());
         return transaction;
     }
 
