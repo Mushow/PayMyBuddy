@@ -38,7 +38,7 @@ public class UserRepositoryIT {
     public void findByEmailTest(){
         User user = userRepository.findByEmail("user1@example.com").get();
         Assertions.assertThat(user.getUsername()).isEqualTo("User1");
-        Assertions.assertThat(user.getPassword()).isEqualTo("password1"); // Assuming plain text for simplicity
+        Assertions.assertThat(user.getPassword()).isEqualTo("password1");
     }
 
     @Test
