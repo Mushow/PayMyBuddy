@@ -17,6 +17,7 @@ public class WalletService implements IWalletService {
     public static final BigDecimal FEES = new BigDecimal("0.005");
 
     @Override
+    @Transactional
     public BigDecimal getBalance(Long userId) {
         return walletRepository.findByUserId(userId)
                 .map(Wallet::getBalance)
