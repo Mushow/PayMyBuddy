@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 public class WalletRepositoryIT {
 
@@ -37,21 +38,18 @@ public class WalletRepositoryIT {
 
 
     @Test
-    @Transactional
     public void findByUserId_test(){
         Wallet wallet = walletRepository.findByUserId(1L).get();
         Assertions.assertThat(wallet.getUser().getUsername()).isEqualTo("User1");
     }
 
     @Test
-    @Transactional
     public void findIssuerWalletTransactions_test(){
         List<Transaction> transactions = walletRepository.findIssuerWalletTransactions(1L);
         Assertions.assertThat(transactions.size()).isEqualTo(1);
     }
 
     @Test
-    @Transactional
     public void findReceiverWalletTransactions_test(){
         List<Transaction> transactions = walletRepository.findReceiverWalletTransactions(1L);
         Assertions.assertThat(transactions.size()).isEqualTo(1);

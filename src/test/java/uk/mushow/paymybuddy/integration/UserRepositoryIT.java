@@ -17,6 +17,7 @@ import uk.mushow.paymybuddy.repositories.UserRepository;
 import javax.sql.DataSource;
 
 @SpringBootTest
+@Transactional
 @ActiveProfiles("test")
 public class UserRepositoryIT {
 
@@ -34,7 +35,6 @@ public class UserRepositoryIT {
     }
 
     @Test
-    @Transactional
     public void findByEmailTest(){
         User user = userRepository.findByEmail("user1@example.com").get();
         Assertions.assertThat(user.getUsername()).isEqualTo("User1");
@@ -42,14 +42,12 @@ public class UserRepositoryIT {
     }
 
     @Test
-    @Transactional
     public void existsByEmailTest(){
         boolean userExists = userRepository.existsByEmail("user1@example.com");
         Assertions.assertThat(userExists).isTrue();
     }
 
     @Test
-    @Transactional
     public void existsByUsernameTest(){
         boolean userExists = userRepository.existsByUsername("User1");
         Assertions.assertThat(userExists).isTrue();

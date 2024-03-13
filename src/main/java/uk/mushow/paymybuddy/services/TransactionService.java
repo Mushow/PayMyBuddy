@@ -9,11 +9,11 @@ import uk.mushow.paymybuddy.repositories.TransactionRepository;
 import uk.mushow.paymybuddy.repositories.WalletRepository;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class TransactionService implements ITransactionService {
 
     private final WalletRepository walletRepository;
@@ -29,7 +29,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Transactional
     public List<TransactionDTO> getIssuerTransactionsDTO(Long userId) {
         List<Transaction> transactions = walletRepository.findIssuerWalletTransactions(userId);
         return transactions.stream()
@@ -38,7 +37,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Transactional
     public List<TransactionDTO> getReceiverTransactionsDTO(Long userId) {
         List<Transaction> transactions = walletRepository.findReceiverWalletTransactions(userId);
         return transactions.stream()
@@ -47,7 +45,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Transactional
     public void transfer(Long userId, String friendEmail, BigDecimal amount, String description) {
         Wallet issuerWallet = walletRepository.findByUserId(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Issuer wallet not found"));
@@ -66,7 +63,6 @@ public class TransactionService implements ITransactionService {
     }
 
     @Override
-    @Transactional
     public Transaction createTransaction(Wallet issuerWallet, Wallet receiverWallet, BigDecimal amount, String description) {
         Transaction transaction = new Transaction();
         transaction.setIssuerWallet(issuerWallet);
