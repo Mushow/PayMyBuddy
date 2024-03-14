@@ -33,7 +33,7 @@ To get PayMyBuddy running on your local machine, follow these steps:
 
 1. Ensure you have **Java 17**, **Maven** and **MySQL** installed on your local machine.
 2. Clone the repository or download the source code to your local machine.
-3. Please make sure to change the database credentials within the `application.properties` under `src\main\resources`.
+3. Please make sure to change the database credentials within the `application.properties` under `src\main\resources`.;w:w
 4. Navigate to the root directory of the project via command line or terminal.
 5. Run the command `mvn spring-boot:run` to start the application.
 6. Once the application is running, open your web browser and navigate to `http://localhost:8080` to access the PayMyBuddy web interface.
