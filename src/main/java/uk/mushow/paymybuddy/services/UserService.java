@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @Service
+@Transactional
 @Log4j2
 public class UserService implements IUserService {
 
@@ -32,7 +33,6 @@ public class UserService implements IUserService {
 
 
     @Override
-    @Transactional
     public void createUser(RegisterDTO registerDTO) {
         if(userRepository.existsByUsername(registerDTO.username())) {
             String invalidUsernameMessage = "The username is already in use.";
@@ -57,7 +57,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public void createWallet(User newUser) {
         Wallet wallet = new Wallet();
         wallet.setUser(newUser);
@@ -66,7 +65,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(() -> {
             String userNotFoundMessage = "The user with email " + email + " was not found.";
@@ -76,13 +74,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public boolean doesEmailExist(String email) {
         return userRepository.existsByEmail(email);
     }
 
     @Override
-    @Transactional
     public void addFriendByEmail(String currentUserEmail, String friendEmail) {
         if (currentUserEmail.equals(friendEmail)) {
             throw new IllegalArgumentException("Cannot add yourself as a friend.");
@@ -104,20 +100,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public boolean areAlreadyFriends(User user1, User user2) {
         return user1.getFriendsList().contains(user2) || user2.getFriendsList().contains(user1);
     }
 
     @Override
-    @Transactional
     public void addEachOtherAsFriends(User user1, User user2) {
         user1.getFriendsList().add(user2);
         user2.getFriendsList().add(user1);
     }
 
     @Override
-    @Transactional
     public Set<User> getFriends(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."))
@@ -125,7 +118,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public void deleteFriendById(Long userId, Long friendId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."));
@@ -140,7 +132,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    @Transactional
     public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found."));

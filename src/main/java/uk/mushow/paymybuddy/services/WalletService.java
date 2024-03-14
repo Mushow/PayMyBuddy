@@ -8,6 +8,7 @@ import uk.mushow.paymybuddy.repositories.WalletRepository;
 
 import java.math.BigDecimal;
 
+@Transactional
 @Service
 public class WalletService implements IWalletService {
 
@@ -17,7 +18,6 @@ public class WalletService implements IWalletService {
     public static final BigDecimal FEES = new BigDecimal("0.005");
 
     @Override
-    @Transactional
     public BigDecimal getBalance(Long userId) {
         return walletRepository.findByUserId(userId)
                 .map(Wallet::getBalance)
@@ -25,13 +25,11 @@ public class WalletService implements IWalletService {
     }
 
     @Override
-    @Transactional
     public void save(Wallet wallet) {
         walletRepository.save(wallet);
     }
 
     @Override
-    @Transactional
     public void topUpBalance(Long userId, BigDecimal amount) {
         BigDecimal amountToTopUp = amount.subtract(amount.multiply(FEES));
         Wallet wallet = walletRepository.findByUserId(userId)
@@ -41,7 +39,6 @@ public class WalletService implements IWalletService {
     }
 
     @Override
-    @Transactional
     public void withdrawFromBalance(Long userId, BigDecimal amount) {
         Wallet wallet = walletRepository.findByUserId(userId)
                 .filter(w -> w.getBalance().compareTo(amount) >= 0)
