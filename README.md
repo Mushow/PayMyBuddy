@@ -16,26 +16,84 @@ PayMyBuddy is a convenient platform designed to make it easy to manage financial
 - **Lombok**: A Java library that automatically plugs into your editor and build tools, spicing up your java.
 - **JUnit & Spring Boot Test**: For unit and integration testing.
 
-## How to Start Unit Test & Integration Test
+## Environment Variable Configuration
 
-To run the unit and integration tests for PayMyBuddy, follow these steps:
+For the PayMyBuddy application to connect to the database securely, you need to set environment variables for your database credentials. These variables replace hard-coded credentials in the application's configuration files. Below is a list of the required environment variables and instructions on how to set them up for your development and testing environments.
 
-1. Ensure you have **Java 17**, **Maven** and **MySQL** installed on your local machine.
-2. Clone the repository or download the source code to your local machine.
-3. Please make sure to change the database credentials within the `application.properties` under `src\main\resources`.
+### Required Environment Variables
 
-    ```properties
-    spring.datasource.url=jdbc:mysql://localhost:3306/paymybuddy?useSSL=false
-    spring.datasource.username=root
-    spring.datasource.password=root
-    ```
-4. Navigate to the root directory of the project via command line or terminal.
-5. Run the following commands to execute the tests:
+You'll need to set the following environment variables:
 
-    ```bash
-    mvn test
-    mvn verify
-    ```
+- `SPRING_DATASOURCE_USERNAME`: The username for your main database.
+- `SPRING_DATASOURCE_PASSWORD`: The password for your main database.
+- `SPRING_DATASOURCE_USERNAME_TEST`: The username for your test database.
+- `SPRING_DATASOURCE_PASSWORD_TEST`: The password for your test database.
+
+These variables are used in the `application.properties` file as follows:
+
+```properties
+# Main database configuration
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
+
+# Test database configuration
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME_TEST:sa} (sa as default)
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD_TEST} (empty password as default)
+```
+
+# Setting Up Environment Variables
+
+Proper configuration of environment variables is crucial to maintaining the security of your PayMyBuddy application. Below are the instructions to set up the necessary environment variables for different development environments.
+
+## In IntelliJ IDEA
+
+1. Navigate to `Run` -> `Edit Configurations...` from the main menu.
+2. Select your Spring Boot application configuration.
+3. Click the `Modify options` drop-down and select `Environment variables`.
+4. Add new variables by clicking the `+` icon and entering the name and value for each of the required variables:
+   - `SPRING_DATASOURCE_USERNAME`
+   - `SPRING_DATASOURCE_PASSWORD`
+   - `SPRING_DATASOURCE_USERNAME_TEST`
+   - `SPRING_DATASOURCE_PASSWORD_TEST`
+
+## On Windows
+
+Environment variables can be set up either through the System Properties or via the command line.
+
+### System Properties:
+
+1. Access the Environment Variables window from the System Properties.
+2. Add new user or system variables with the names and values provided above.
+
+### Command Line:
+
+Use the `setx` command to set each variable permanently in the Command Prompt as an administrator:
+
+```cmd
+setx SPRING_DATASOURCE_USERNAME "yourUsername" /M
+setx SPRING_DATASOURCE_PASSWORD "yourPassword" /M
+setx SPRING_DATASOURCE_USERNAME_TEST "yourTestUsername" /M
+setx SPRING_DATASOURCE_PASSWORD_TEST "yourTestPassword" /M
+```
+
+## On macOS or Linux
+
+To set up the required environment variables on macOS or Linux, add the following `export` commands to your shell initialization file such as `.bash_profile`, `.bashrc`, `.zshrc`, or any other configuration file used by your shell.
+
+```bash
+export SPRING_DATASOURCE_USERNAME=yourUsername
+export SPRING_DATASOURCE_PASSWORD=yourPassword
+export SPRING_DATASOURCE_USERNAME_TEST=yourTestUsername
+export SPRING_DATASOURCE_PASSWORD_TEST=yourTestPassword
+```
+
+After adding these lines to the file, run the following command in your terminal to apply the changes:
+
+```bash
+source ~/.bash_profile
+```
+
+Please make sure that the users replace `yourUsername`, `yourPassword`, `yourTestUsername`, and `yourTestPassword` with their actual credentials before saving the file and running the `source` command. This will ensure that the environment variables are set correctly in their session.
 
 ## Test Types
 
