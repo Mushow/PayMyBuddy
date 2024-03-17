@@ -20,9 +20,27 @@ PayMyBuddy is a convenient platform designed to make it easy to manage financial
 
 To run the unit and integration tests for PayMyBuddy, follow these steps:
 
+1. Ensure you have **Java 17**, **Maven** and **MySQL** installed on your local machine.
+2. Clone the repository or download the source code to your local machine.
+3. Please make sure to change the database credentials within the `application.properties` under `src\main\resources`.
+
+    ```properties
+    spring.datasource.url=jdbc:mysql://localhost:3306/paymybuddy?useSSL=false
+    spring.datasource.username=root
+    spring.datasource.password=root
+    ```
+4. Navigate to the root directory of the project via command line or terminal.
+5. Run the following commands to execute the tests:
+
+    ```bash
+    mvn test
+    mvn verify
+    ```
+
+## Test Types
+
 1. **Unit Tests**: These tests are designed to test individual components of the application in isolation.
     - Run the command `mvn test` to execute all unit tests in the application.
-
 2. **Integration Tests**: These tests are designed to test the interaction between components and the overall behavior of the application.
     - Ensure that the application is configured to connect to an appropriate test database.
     - Run the command `mvn verify` to execute the integration tests.
@@ -31,12 +49,9 @@ To run the unit and integration tests for PayMyBuddy, follow these steps:
 
 To get PayMyBuddy running on your local machine, follow these steps:
 
-1. Ensure you have **Java 17**, **Maven** and **MySQL** installed on your local machine.
-2. Clone the repository or download the source code to your local machine.
-3. Please make sure to change the database credentials within the `application.properties` under `src\main\resources`.
-4. Navigate to the root directory of the project via command line or terminal.
-5. Run the command `mvn spring-boot:run` to start the application.
-6. Once the application is running, open your web browser and navigate to `http://localhost:8080` to access the PayMyBuddy web interface.
+1. Navigate to the root directory of the project via command line or terminal.
+2. Run the command `mvn spring-boot:run` to start the application.
+3. Once the application is running, open your web browser and navigate to `http://localhost:8080` to access the PayMyBuddy web interface.
 
 
 ## Additional Documentation
