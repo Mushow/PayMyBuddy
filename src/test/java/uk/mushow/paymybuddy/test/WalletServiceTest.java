@@ -1,21 +1,18 @@
-package uk.mushow.paymybuddy;
+package uk.mushow.paymybuddy.test;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.math.BigDecimal;
-import java.util.Optional;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import uk.mushow.paymybuddy.models.Wallet;
 import uk.mushow.paymybuddy.repositories.WalletRepository;
 import uk.mushow.paymybuddy.services.WalletService;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class WalletServiceTest {

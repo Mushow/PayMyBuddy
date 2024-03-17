@@ -1,4 +1,4 @@
-package uk.mushow.paymybuddy;
+package uk.mushow.paymybuddy.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

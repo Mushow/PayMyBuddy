@@ -1,4 +1,4 @@
-package uk.mushow.paymybuddy;
+package uk.mushow.paymybuddy.test;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
