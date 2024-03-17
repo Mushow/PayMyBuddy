@@ -40,7 +40,11 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login")
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
-                        .permitAll()
+                        .permitAll())
+                .rememberMe(rememberMe -> rememberMe
+                                .key("uniqueSecretToken")
+                                .tokenValiditySeconds(86400)
+                                .userDetailsService(customUserDetailsService)
                 );
 
         return http.build();
