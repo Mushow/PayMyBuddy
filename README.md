@@ -26,8 +26,6 @@ You'll need to set the following environment variables:
 
 - `SPRING_DATASOURCE_USERNAME`: The username for your main database.
 - `SPRING_DATASOURCE_PASSWORD`: The password for your main database.
-- `SPRING_DATASOURCE_USERNAME_TEST`: The username for your test database.
-- `SPRING_DATASOURCE_PASSWORD_TEST`: The password for your test database.
 
 These variables are used in the `application.properties` file as follows:
 
@@ -35,10 +33,6 @@ These variables are used in the `application.properties` file as follows:
 # Main database configuration
 spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
 spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
-
-# Test database configuration
-spring.datasource.username=${SPRING_DATASOURCE_USERNAME_TEST:sa} (sa as default)
-spring.datasource.password=${SPRING_DATASOURCE_PASSWORD_TEST} (empty password as default)
 ```
 
 # Setting Up Environment Variables
@@ -53,8 +47,6 @@ Proper configuration of environment variables is crucial to maintaining the secu
 4. Add new variables by clicking the `+` icon and entering the name and value for each of the required variables:
    - `SPRING_DATASOURCE_USERNAME`
    - `SPRING_DATASOURCE_PASSWORD`
-   - `SPRING_DATASOURCE_USERNAME_TEST`
-   - `SPRING_DATASOURCE_PASSWORD_TEST`
 
 ## On Windows
 
@@ -72,8 +64,6 @@ Use the `setx` command to set each variable permanently in the Command Prompt as
 ```cmd
 setx SPRING_DATASOURCE_USERNAME "yourUsername" /M
 setx SPRING_DATASOURCE_PASSWORD "yourPassword" /M
-setx SPRING_DATASOURCE_USERNAME_TEST "yourTestUsername" /M
-setx SPRING_DATASOURCE_PASSWORD_TEST "yourTestPassword" /M
 ```
 
 ## On macOS or Linux
@@ -83,8 +73,6 @@ To set up the required environment variables on macOS or Linux, add the followin
 ```bash
 export SPRING_DATASOURCE_USERNAME=yourUsername
 export SPRING_DATASOURCE_PASSWORD=yourPassword
-export SPRING_DATASOURCE_USERNAME_TEST=yourTestUsername
-export SPRING_DATASOURCE_PASSWORD_TEST=yourTestPassword
 ```
 
 After adding these lines to the file, run the following command in your terminal to apply the changes:
@@ -93,7 +81,7 @@ After adding these lines to the file, run the following command in your terminal
 source ~/.bash_profile
 ```
 
-Please make sure that the users replace `yourUsername`, `yourPassword`, `yourTestUsername`, and `yourTestPassword` with their actual credentials before saving the file and running the `source` command. This will ensure that the environment variables are set correctly in their session.
+Please make sure that the users replace `yourUsername`, `yourPassword` with their actual credentials before saving the file and running the `source` command. This will ensure that the environment variables are set correctly in their session.
 
 ## Test Types
 
