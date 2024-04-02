@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100 text-gray-900 flex justify-center">
+<div class="container max-w-sm mt-20 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+    <form action="#" th:action="@{/login}" method="POST">
+        <div class="mb-4 text-center">
+            <h5 class="inline-block bg-green-500 text-white py-2 px-4 rounded">Pay My Buddy</h5>
+        </div>
+        <div class="mb-4" th:if="${message}">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" th:text="${message}">
+            </div>
+        </div>
+        <div class="mb-4" th:if="${param.error}">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+                Invalid email or password
+            </div>
+        </div>
+        <div class="mb-4" th:if="${param.logout}">
+            <div class="bg-gray-100 border border-gray-400 text-black px-4 py-3 rounded relative">
+                You have been logged out
+            </div>
+        </div>
+        <div class="mb-4">
+            <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="username" placeholder="Email" id="inputEmail" maxlength="30" required>
+        </div>
+        <div class="mb-6">
+            <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" placeholder="Password" id="inputPassword" maxlength="30" required>
+        </div>
+        <div class="mb-4">
+            <input type="checkbox" name="remember-me" id="remember-me"> <label for="remember-me">Remember Me</label>
+        </div>
+        <div class="flex items-center justify-between mt-4">
+            <button id="submit-button" type="submit" class="w-full inline-block align-middle text-center select-none border font-bold whitespace-no-wrap p-3 rounded text-base leading-normal no-underline text-blue-100 bg-blue-500 hover:bg-blue-700">
+                Login
+            </button>
+        </div>
+    </form>
+    <div class="text-center mt-4">
+        <a href="#" th:href="@{/signup}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+            Click here to sign up
+        </a>
+    </div>
+</div>
+</body>
+</html>

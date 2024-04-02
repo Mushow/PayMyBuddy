@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Navbar Fragment</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="bg-gray-800 p-4 text-white" th:fragment="navigation">
+    <div class="container mx-auto flex justify-between">
+        <div class="flex space-x-4">
+            <div class="hidden md:flex items-center space-x-1">
+                <a href="#" th:href="@{/home}" class="py-5 px-3 hover:bg-gray-700 rounded">Home</a>
+                <a href="#" th:href="@{/transfer}" class="py-5 px-3 hover:bg-gray-700 rounded">Transfer</a>
+                <a href="#" th:href="@{/friends}" class="py-5 px-3 hover:bg-gray-700 rounded">Add Friends</a>
+                <a href="#" th:href="@{/profile}" class="py-5 px-3 hover:bg-gray-700 rounded">Profile</a>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div sec:authorize="isAuthenticated()">
+                <span class="px-4" th:text="${user.getUsername()}"></span>
+                <a href="#" th:href="@{/logout}" class="py-5 px-3 hover:bg-gray-700 rounded">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Money</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-100 text-gray-900">
+<div th:insert="~{fragments/navbar :: navigation}"></div>
+<div th:if="${message}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold">Success!</strong>
+    <span class="block sm:inline" th:text="${message}"></span>
+</div>
+
+<!-- Error Message -->
+<div th:if="${error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+    <strong class="font-bold">Error!</strong>
+    <span class="block sm:inline" th:text="${error}"></span>
+</div>
+<div class="flex gap-5 mx-64 pt-20">
+    <div class="w-full">
+            <h2 class="text-xl font-semibold">Your Balance: <span class="text-green" th:text="${availableFunds}"></span></h2>
+    </div>
+    <div class="w-full container max-w-md mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <form action="#" th:action="@{/transfer}" method="POST">
+            <div class="mb-4">
+                <label for="friendSelect" class="block text-gray-700 text-sm font-bold mb-2">Select a friend:</label>
+                <select id="friendSelect" name="friendEmail" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <th:block th:if="${not #lists.isEmpty(friends)}">
+                        <th:block th:each="friend : ${friends}">
+                            <option th:value="${friend.getEmail()}" th:text="${friend.getUsername()} + ' → ' + ${friend.getEmail()}">Friend Name</option>
+                        </th:block>
+                    </th:block>
+                    <option th:if="${#lists.isEmpty(friends)}">(None)</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Amount:</label>
+                <input type="text" id="amount" name="amount" placeholder="Enter amount" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="mb-4">
+                <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Groceries, Restaurant, Tuition Fees..." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Send
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
